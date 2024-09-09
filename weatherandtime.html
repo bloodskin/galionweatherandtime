@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Current Time and Weather Widget</title>
+  <style>
+    body {
+      font-family: Tahoma, Arial, Verdana, Segoe, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #000000;
+    }
+
+    #weatherWidget {
+      display: flex;
+      flex-direction: column;  /* Stack elements vertically */
+      align-items: center;
+      justify-content: space-around;
+      background-color: #000000;
+      color: #dddddd;
+      padding: 0rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      font-size: 1rem;
+      text-align: center;
+      min-width: 350px;
+
+      animation: bounce 180s infinite linear; /* Apply the bounce animation */
+    }
+
+    #time {
+      font-size: 2rem;
+      text-align: center;
+      padding: 0em;
+      margin-bottom: 1rem;  /* Add space between time and weather */
+    }
+
+    .currentWeatherIcon {
+      text-align: center;
+      width: 5.25rem;
+      flex-grow: 0;
+    }
+
+    .weatherInfo {
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .weatherwidget-io {
+      text-decoration: none;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: #333;
+      box-sizing: border-box;
+      display: block;
+      position: relative;
+      width: 100%;
+      padding: 0;
+      border-radius: 10px;
+      overflow: hidden;
+      text-align: center;
+      height: 180px;
+      background-color: #000000;
+      max-width: 600px;
+      text-shadow: none;
+      background-image: none;
+    }
+
+    html {
+      font-size: 32px;
+    }
+
+    *, :after, :before {
+      box-sizing: inherit;
+    }
+
+    @keyframes bounce {
+      0% { transform: translateX(0) translateY(0); }
+      12.5% { transform: translateX(190%) translateY(-30%); }
+      25% { transform: translateX(0) translateY(0); }
+      37.5% { transform: translateX(-190%) translateY(-30%); }
+      50% { transform: translateX(0) translateY(0); }
+      62.5% { transform: translateX(-190%) translateY(30%); }
+      75% { transform: translateX(0) translateY(0); }
+      87.5% { transform: translateX(190%) translateY(30%); }
+      100% { transform: translateX(0) translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<div id="weatherWidget">
+  <div id="time"></div>
+  <a class="weatherwidget-io" href="https://forecast7.com/en/40d71n82d80/44833/?unit=us" 
+     data-label_1="GALION" data-label_2="WEATHER" font="Arial Narrow" data-icons="Climacons Animated" data-theme="weather_one">
+    GALION WEATHER
+  </a>
+</div>
+
+<script>
+!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+</script>
+
+<script>
+function updateTime() {
+  const now = new Date();
+  let hours = now.getHours();
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+
+  // Convert to 12-hour format
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  
+  // Pad the hours with leading zero if needed
+  const hourString = String(hours);
+  
+  const timeString = `${hourString}:${minutes} ${ampm}`;
+
+  document.getElementById('time').textContent = timeString;
+}
+
+setInterval(updateTime, 1000);
+updateTime(); // Initial call to display time immediately
+</script>
+
+</body>
+
+</html>
